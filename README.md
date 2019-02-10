@@ -1,20 +1,33 @@
+
 # django-oscar-saferpay
 
-This is an example implementation not meant for for copy & paste. A oscar shop can be setup
-totally different.
+*Saferpay dashboard for django-oscar*
 
-First be sure that you installed (django-saferpay)[https://github.com/taywa/django-saferpay].
+This package is a [django-oscar](http://oscarcommerce.com) dashboard component for saferpay.  
+First follow the install instructions for django-saferpay ([pypi](https://pypi.org/project/django-saferpay/), [github](https://github.com/taywa/django-saferpay))
+.
 
-Add the app to django `saferpay` from django-saferpay also needs to be installed.
+Install with `pip install django-oscar-saferpay`.
+
+Update your `settings.py`:
 
 ```python
 INSTALLED_APPS = [
     ...
-    'saferpay',  # 
     'saferpay_oscar',
 ]
+```
 
-add new payment method to oscar in `settings.py`:
+in your project `urls.py`:
+
+```python
+from saferpay_oscar.dashboard.app import application as saferpay_dashboard_application
+...
+        url(r'^dashboard/saferpay/', saferpay_dashboard_application.urls),
+...
+```
+
+add a new payment method to oscar in `settings.py`:
 
 ```python
 ...
@@ -23,6 +36,11 @@ OSCAR_PAYMENT_METHODS = (
 )
 ...
 ```
+
+## Example implementation
+
+Here is an example implementation not meant for for copy & paste. A oscar shop can be setup
+totally different.
 
 ### Update your checkout `myshop/checkout/app.py`
 
@@ -69,7 +87,6 @@ class CheckoutApplication(app.CheckoutApplication):
 
 application = CheckoutApplication()
 ```
-
 
 ### Update your views
 
