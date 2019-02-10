@@ -1,26 +1,23 @@
 from django.conf.urls import url
-from django.contrib.admin.views.decorators import staff_member_required
-from oscar.core.application import Application
-
-from saferpay_oscar.dashboard import views
+from oscar.core.loading import get_class
+from oscar.core.application import DashboardApplication
 
 
-class SaferpayDashboardApplication(Application):
+class SaferpayDashboardApplication(DashboardApplication):
     name = None
-    list_view = views.TransactionListView
-    detail_view = views.TransactionDetailView
+    default_permissions = ['is_staff', ]
+
+    list_view = get_class('saferpay_oscar.dashboard.views', 'TransactionListView')  #views.TransactionListView
+    detail_view = get_class('saferpay_oscar.dashboard.views', 'TransactionDetailView')  #views.TransactionDetailView
 
     def get_urls(self):
-        urlpatterns = [
+        urls = [
             url(r'^transactions/$', self.list_view.as_view(),
                 name='saferpay_oscar-transactions-list'),
-            url(r'^transactions/(?P<pk>\d+)/$', self.detail_view.as_view(),
+            url(r'^transactions/(?P<pk>\w+)/$', self.detail_view.as_view(),
                 name='saferpay_oscar-transactions-detail'),
         ]
-        return self.post_process_urls(urlpatterns)
-
-    def get_url_decorator(self, url_name):
-        return staff_member_required
+        return self.post_process_urls(urls)
 
 
 application = SaferpayDashboardApplication()
