@@ -3,7 +3,7 @@
 
 *Saferpay dashboard for django-oscar*
 
-This package is a [django-oscar](http://oscarcommerce.com) dashboard component for saferpay.  
+This package is a [django-oscar](http://oscarcommerce.com) dashboard component for [django-saferpay](https://github.com/taywa/django-saferpay).  
 First follow the install instructions for django-saferpay ([pypi](https://pypi.org/project/django-saferpay/), [github](https://github.com/taywa/django-saferpay))
 .
 
